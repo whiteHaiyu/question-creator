@@ -16,7 +16,23 @@ const createPaper = (params) => {
     return axios.get(`xx/xx/${params}`)
 };
 
+const createSurvey = (data) => {
+  return axios.post({
+    url: '/api/question/create_s',
+    data
+  })
+}
+
+const createQuestions = (data) => {
+  return axios.post({
+    url: '/api/question/create_s',
+    data
+  })
+}
+
 export {
     getPaper,
-    createPaper
+    createPaper,
+    createSurvey,
+    createQuestions
 }
