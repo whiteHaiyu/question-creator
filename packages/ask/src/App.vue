@@ -1,10 +1,12 @@
 <script setup>
 import {ref, reactive} from 'vue';
-import { ElMessage } from 'element-plus'
-import {createPaper, createSurvey} from './utils/request'
+import {ElMessage} from 'element-plus';
+import {createPaper, createSurvey} from './utils/request';
+import {objDeepClone, guid} from './utils/utils';
+import Question from './components/question.vue';
 
 // 操作步骤 0: '创建问卷' 1: '创建试题' 2: '算分规则'
-const stage = ref(0);
+const stage = ref(1);
 
 const surveyName = ref('');
 
@@ -18,16 +20,16 @@ const defaultQuestion = {
   test: 0, // 是否计分：1计分，0不计分
   options: [
     {
-      opt: '', // 选项
+      opt: 'A', // 选项
       describe: '', //选项的描述
       score: 0 //该选项的分数
     }
   ] //每个题的选项
 };
 
-const questions = reactive([]);
+const questions = ref([]);
 
-
+// 创建问卷
 const handleSurvey = async () => {
   try {
     if (surveyName.value) {
@@ -43,6 +45,29 @@ const handleSurvey = async () => {
     ElMessage.error(e);
   }
 };
+
+// 新建题目
+const handleCreateQuestion = () => {
+  const uid = guid();
+  questions.value.push({
+    uid,
+    ...defaultQuestion
+  });
+};
+// 复制题目
+const handleCloneQuestion = (uid) => {
+  const target = questions.value.find(item => item.uid === uid);
+  const new_uid = guid();
+  questions.value.push({
+    ...objDeepClone(target),
+    uid: new_uid
+  })
+};
+// 删除题目
+const handleDeleteQuestion = (uid) => {
+  questions.value = questions.value.filter(item => item.uid !== uid);
+};
+
 
 </script>
 
@@ -61,6 +86,17 @@ const handleSurvey = async () => {
     </div>
     <div v-if="stage === 1">
       <!-- stage 创建题目 -->
+      <div class="buttons">
+        <el-button type="primary" @click="handleCreateQuestion">创建试题</el-button>
+      </div>
+      <Question
+        v-for="(item, index) in questions"
+        :key="item.uid"
+        :index="index + 1"
+        :question="item"
+        @handleCopy="handleCloneQuestion"
+        @handleDelete="handleDeleteQuestion"
+      />
     </div>
     <div v-if="stage === 2">
       <!-- stage 创建算分规则 -->
