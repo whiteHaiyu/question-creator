@@ -1,12 +1,14 @@
-export const objDeepClone = (obj) => {
-    // const res = {};
-
-    // for (const key in obj) {
-    //     res[key] = typeof obj[key] === 'object' ? objDeepClone(obj[key]) : obj[key];
-    // }
-
-    // return res;
-    return JSON.parse(JSON.stringify(obj));
+export const deepClone = (obj) => {
+    if (typeof obj !== 'object') return
+    let newObj = obj instanceof Array ? [] : {}  
+    for (let key in obj) {    
+       if (typeof obj[key] === 'object') {      
+         newObj[key] = deepClone(obj[key])    
+       } else {      
+          newObj[key] = obj[key]    
+       }  
+     }
+     return newObj
 };
 
 export const guid = () => {

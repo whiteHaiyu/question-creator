@@ -16,15 +16,28 @@ const createPaper = (params) => {
     return axios.get(`xx/xx/${params}`)
 };
 
+// 创建问卷
 const createSurvey = (data) => {
-  return axios.post({
+  return axios({
+    method: 'post',
     url: '/api/question/create_s',
     data
   })
 }
 
+// 问卷添加题目
 const createQuestions = (data) => {
-  return axios.post({
+  return axios({
+    method: 'post',
+    url: '/api/question/create_s',
+    data
+  })
+}
+
+// 问卷添加算分规则
+const createScore = (data) => {
+  return axios({
+    method: 'post',
     url: '/api/question/create_s',
     data
   })
@@ -34,5 +47,6 @@ export {
     getPaper,
     createPaper,
     createSurvey,
-    createQuestions
+    createQuestions,
+    createScore
 }

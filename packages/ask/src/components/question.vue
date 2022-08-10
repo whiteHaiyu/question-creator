@@ -31,11 +31,13 @@ const handleAddOption = () => {
 
 <template>
 <div class="question-card">
-    <div>
-        <span>第{{index}}题</span>
-        <el-button v-if="question.type === 0" type="primary" @click="handleAddOption">添加选项</el-button>
-        <el-button type="primary" @click="emit('handleCopy', question.uid)">复制题目</el-button>
-        <el-button type="primary" @click="emit('handleDelete', question.uid)">删除题目</el-button>
+    <div class="header-container">
+        <span class="question-index">第{{index}}题</span>
+        <div>
+            <el-button v-if="question.type === 0" type="primary" @click="handleAddOption">添加选项</el-button>
+            <el-button type="primary" @click="emit('handleCopy', question.uid)">复制题目</el-button>
+            <el-button type="primary" @click="emit('handleDelete', question.uid)">删除题目</el-button>
+        </div>
     </div>
     <div class="question-container">
         <el-form :model="question" label-width="80px">
@@ -80,9 +82,20 @@ const handleAddOption = () => {
     border: 1px solid #999;
     border-radius: 5px;
     min-height: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
 .question-container {
     padding: 20px;
+}
+
+.question-index {
+    font-weight: 600;
 }
 </style>
