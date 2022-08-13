@@ -18,7 +18,7 @@ const title = computed(() => {
     return `${surveyName.value} - ${surveyId.value}`
   }
   return '欢迎使用问卷创建器';
-})
+});
 
 const defaultQuestion = {
   questionId: '', // 问题Id
@@ -40,18 +40,17 @@ const questions = ref([]);
 // 得分类别
 const defaultScore = {
   questionIds: [],
-  scoreName: '',
-  scoreRate: 1
+  title: '',
+  factor: 1
 };
 const scoreList = ref([]);
 
 // 创建问卷
 const handleSurvey = async () => {
-  stage.value ++;
   try {
     if (surveyName.value) {
       const res = await createSurvey({
-        surveyName: surveyName.value
+        title: surveyName.value
       });
       surveyId.value = res.data;
       stage.value ++;
@@ -86,12 +85,13 @@ const handleDeleteQuestion = (uid) => {
 };
 // 提交问题创建
 const handleQuestion = async () => {
-  stage.value ++;
   try {
     if (questions.value.length) {
-      const res = await createQuestions({
-        questions: questions.value
+      const postData = deepClone(questions.value).map(item => {
+        item.surveyId = surveyId.value;
+        return item;
       });
+      const res = await createQuestions(postData);
       if (res.status === 200) {
         stage.value ++;
         ElMessage.success('创建成功');
@@ -110,6 +110,7 @@ const handleCreateScore = () => {
   const uid = guid();
   scoreList.value.push({
     uid,
+    surveyId: surveyId.value,
     ...deepClone(defaultScore)
   });
 };
@@ -119,13 +120,11 @@ const handleDeleteScore = (uid) => {
 };
 // 提交分数规则
 const handleScore = async () => {
-  stage.value ++;
   try {
-      const res = await createScore({
-        scoreList: scoreList.value
-      });
+      const res = await createScore(scoreList.value);
       if (res.status === 200) {
         ElMessage.success('创建成功');
+        stage.value ++;
       } else {
         ElMessage.warning('请输入问卷名称');
       }
@@ -149,7 +148,7 @@ const handleScore = async () => {
       <!-- stage 创建问卷 -->
       <h4>请输入问卷名称：</h4>
       <el-input v-model="surveyName" placeholder="请输入问卷名称" style="margin-top: 50px;"/>
-      <el-button type="primary" @click="handleSurvey" style="margin-top: 150px;">下一步</el-button>
+      <el-button type="primary" @click="handleSurvey" style="margin-top: 150px;">创建问卷</el-button>
     </div>
     <div v-if="stage === 1">
       <!-- stage 创建题目 -->
@@ -183,6 +182,14 @@ const handleScore = async () => {
       /> 
       <el-empty v-if="scoreList.length === 0" description="请设置算分规则~" />
     </div>
+    <div v-if="stage === 3">
+      <!-- stage 创建算分规则 -->
+      <div class="result">
+          <span class="tips">问卷创建完成，以下内容请手动保存~</span>
+          <span class="tips">问卷名: {{surveyName}}</span>
+          <span class="tips">问卷ID: {{surveyId}}</span>
+      </div>
+    </div>
 </div>
 </template>
 
@@ -214,5 +221,17 @@ const handleScore = async () => {
   top: 0;
   background: #fff;
   z-index: 2;
+}
+
+.result {
+  margin-top: 80px;
+}
+
+.tips {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
 }
 </style>

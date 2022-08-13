@@ -1,4 +1,6 @@
 <script setup>
+import {computed} from 'vue';
+
 const {questions, score, questionIds} = defineProps({
     questions: Array,
     questionIds: Array,
@@ -7,20 +9,24 @@ const {questions, score, questionIds} = defineProps({
 
 const emit = defineEmits(['handleDelete']);
 
+const computedQuestions = computed(() => {
+    return questions.filter(item => item.test === 1);
+});
+
 </script>
 
 <template>
 <div class="question-card">
-    <el-button type="primary" @click="emit('handleDelete', question.uid)">删除</el-button>
+    <el-button type="primary" @click="emit('handleDelete', score.uid)">删除</el-button>
     <div class="question-container">
         <el-form :model="score" label-width="80px">
             <el-form-item label="得分类别:">
-                <el-input v-model="score.scoreName"/>
+                <el-input v-model="score.title"/>
             </el-form-item>
             <el-form-item label="参与题目:">
                 <el-select v-model="score.questionIds" multiple placeholder="请选择">
                     <el-option
-                        v-for="item in questions"
+                        v-for="item in computedQuestions"
                         :key="item.uid"
                         :label="'第' + item.questionId + '题'"
                         :value="item.questionId"
@@ -28,7 +34,7 @@ const emit = defineEmits(['handleDelete']);
                 </el-select>
             </el-form-item>
             <el-form-item label="系数:">
-                <el-input v-model="score.scoreRate"/>
+                <el-input v-model="score.factor"/>
             </el-form-item>
         </el-form>
     </div>

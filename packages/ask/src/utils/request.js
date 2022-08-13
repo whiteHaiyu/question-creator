@@ -20,7 +20,7 @@ const createPaper = (params) => {
 const createSurvey = (data) => {
   return axios({
     method: 'post',
-    url: '/api/question/create_s',
+    url: '/api/survey/create',
     data
   })
 }
@@ -38,7 +38,7 @@ const createQuestions = (data) => {
 const createScore = (data) => {
   return axios({
     method: 'post',
-    url: '/api/question/create_s',
+    url: '/api/inform/createScoreRule',
     data
   })
 }

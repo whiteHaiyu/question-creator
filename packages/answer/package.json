@@ -4,15 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "vant": "^3.5.4",
     "vue": "^3.2.37"
   },
   "devDependencies": {
+    "@vitejs/plugin-legacy": "^2.0.1",
     "@vitejs/plugin-vue": "^3.0.0",
+    "terser": "^5.14.2",
+    "unplugin-vue-components": "^0.22.4",
     "vite": "^3.0.0"
   }
 }
