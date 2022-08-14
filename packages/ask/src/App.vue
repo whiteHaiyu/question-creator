@@ -87,12 +87,15 @@ const handleDeleteQuestion = (uid) => {
 const handleQuestion = async () => {
   try {
     if (questions.value.length) {
-      const postData = deepClone(questions.value).map(item => {
+      const postData = deepClone(questions.value).map((item, index) => {
         item.surveyId = surveyId.value;
+        item.questionId = index + 1;
         return item;
       });
       const res = await createQuestions(postData);
       if (res.status === 200) {
+        // HACK [组件中props被解构] 更新questionId
+        questions.value = postData;
         stage.value ++;
         ElMessage.success('创建成功');
       } else {

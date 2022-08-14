@@ -1,6 +1,6 @@
 <script setup>
 import {convert} from '../utils/utils';
-import {ref, reactive, onMounted} from 'vue';
+import {watchEffect} from 'vue';
 
 const defaultOption = {
     opt: '', // 选项
@@ -14,10 +14,6 @@ const {question, index} = defineProps({
 });
 
 const emit = defineEmits(['handleCopy', 'handleDelete']);
-
-onMounted(() => {
-    question.questionId = index;
-});
 
 const handleAddOption = () => {
     const optionsIdx = question.options.length + 1;
