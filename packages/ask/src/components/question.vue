@@ -1,6 +1,5 @@
 <script setup>
 import {convert} from '../utils/utils';
-import {watchEffect} from 'vue';
 
 const defaultOption = {
     opt: '', // 选项
