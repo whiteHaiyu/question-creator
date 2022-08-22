@@ -36,6 +36,9 @@ const computedQuestions = computed(() => {
             <el-form-item label="系数:">
                 <el-input v-model="score.factor"/>
             </el-form-item>
+            <el-form-item label="描述:">
+                <el-input v-model="score.remark"/>
+            </el-form-item>
         </el-form>
     </div>
 </div>

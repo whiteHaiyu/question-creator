@@ -41,7 +41,8 @@ const questions = ref([]);
 const defaultScore = {
   questionIds: [],
   title: '',
-  factor: 1
+  factor: 1,
+  remark: ''
 };
 const scoreList = ref([]);
 

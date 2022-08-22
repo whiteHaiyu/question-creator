@@ -27,16 +27,16 @@ const questionList = reactive([
     id: 18
   },
   {
-    name: '生育生活质量问卷 (Fertility Quality of Life，FertiQoL)',
-    id: 19
-  },
-  {
     name: '9条目患者健康问卷 (Patient Health Questionnaire，PHQ—9)',
     id: 20
   },
   {
     name: '广泛性焦虑障碍量表 (Generalized Anxiety Disorder，GAD—7)',
     id: 21
+  },
+  {
+    name: '生育生活质量问卷 (Fertility Quality of Life，FertiQoL)',
+    id: 19
   }
 ]);
 
@@ -108,21 +108,14 @@ const onSubmit = () => {
     }).filter(item => item.result);
     submitPaper(postData).then(res => {
       const {data} = res;
-      try {
-        if (data.length === 0) {
-          result.value = [];
-        } else {
-          const resResult = [];
-          data.forEach(item => {
-            Object.keys(item).forEach(key => {
-              resResult.push(`${key}: ${item[key]}分`);
-            });
-          });
-          result.value = resResult;
+      result.value = data.map(item => {
+        const {title, score, remark = ''} = item;
+        return {
+          title,
+          score,
+          remark: remark.split(/[\;\；]/g)
         }
-      } catch (e) {
-
-      }
+      });
       showResult.value = true;
     }).catch(err => {
       Dialog.alert({
@@ -141,12 +134,19 @@ const handleNext = () => {
       showSheet.value = false;
       showRequired.value = false;
       getData(questionList[idx].id);
+      try {
+        scrollTo(0,0);
+      } catch (e) {
+        console.log('scroll error');
+      }
   } else {
       Dialog.alert({
-        message: '问卷全部填完了'
+        message: '问卷全部填完了,感谢您的配合~'
       });
   }
 }
+
+const noop = () => {};
 
 </script>
 
@@ -179,13 +179,19 @@ const handleNext = () => {
   </div>
 </div>
 <van-loading v-else color="#1989fa" class="fix-center"/>
-<van-overlay :show="showResult">
-  <div class="wrapper" @click.stop>
-    <div v-for="item in result">{{item}}</div>
+<van-overlay :show="showResult" @click="showResult = false">
+  <div class="wrapper" @click.stop="noop">
+    <div v-for="item in result">
+        <div class="score">{{item.title}}：{{item.score}}分</div>
+        <div class="remark" v-for="tips in item.remark">{{tips}}</div>
+    </div>
     <div v-if="result.length === 0">提交完成</div>
     <div class="flex-row">
-      <van-button round size="small" type="primary" @click="showResult = false" style="margin-top: 50px; width: 120px;">确定</van-button>
-      <van-button round size="small" type="default" @click="handleNext" style="margin-top: 50px; width: 120px;">下一问卷</van-button>
+      <!-- <van-button round size="small" type="primary" @click="showResult = false" style="margin-top: 50px; width: 120px;">确定</van-button> -->
+      <!-- FIXME 这里想要在最后一个问卷的时候展示 【确定提交】 -->
+      <van-button round size="small" type="primary" @click="handleNext" style="margin-top: 50px; width: 120px;">{{
+        surveyId === questionList[4].id ? '确定提交' : '下一问卷'
+      }}</van-button>
     </div>
   </div>
 </van-overlay>
@@ -202,7 +208,7 @@ const handleNext = () => {
 
 <style scoped>
 .title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
   text-align: center;
   padding: 0 15px;
@@ -227,13 +233,15 @@ const handleNext = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80%;
   width: 80%;
   flex-direction: column;
   background-color: #fff;
-  margin: 0 auto;
-  transform: translateY(10%);
   border-radius: 5px;
+  padding-top: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .flex-row {
@@ -243,5 +251,14 @@ const handleNext = () => {
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.score {
+  font-size: 14px;
+}
+
+.remark {
+  font-size: 12px;
+  color: #999;
 }
 </style>

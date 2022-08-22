@@ -52,16 +52,26 @@ const titleStyle = computed(() => {
 .custom-title {
     margin-right: 4px;
     vertical-align: middle;
+    font-size: 16px;
 }
 
 .custom-title-require {
     margin-right: 4px;
     vertical-align: middle;
     color: red;
+    font-size: 16px;
 }
 
 ::v-deep .van-cell__title {
     text-align: left;
+}
+
+::v-deep .van-cell__title .van-field__label {
+    font-size: 16px !important;
+}
+
+::v-deep .van-radio__label {
+    font-size: 15px !important;
 }
 
 </style>
