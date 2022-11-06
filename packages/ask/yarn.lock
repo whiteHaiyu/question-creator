@@ -46,6 +46,11 @@
   "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.182.tgz"
   "version" "4.14.182"
 
+"@types/node@^18.11.9":
+  "integrity" "sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg=="
+  "resolved" "https://registry.npmmirror.com/@types/node/-/node-18.11.9.tgz"
+  "version" "18.11.9"
+
 "@types/web-bluetooth@^0.0.14":
   "integrity" "sha512-5d2RhCard1nQUC3aHcq/gHzWYO6K0WJmAbjO7mQJgCQKtZpgXxv1rOM6O/dBDhDYYVutk1sciOgNSe+5YyfM8A=="
   "resolved" "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.14.tgz"
@@ -97,6 +102,11 @@
   dependencies:
     "@vue/compiler-dom" "3.2.37"
     "@vue/shared" "3.2.37"
+
+"@vue/devtools-api@^6.0.0":
+  "integrity" "sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ=="
+  "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.4.5.tgz"
+  "version" "6.4.5"
 
 "@vue/reactivity-transform@3.2.37":
   "integrity" "sha512-IWopkKEb+8qpu/1eMKVeXrK0NLw9HicGviJzhJDEyfxTR9e1WtpnnbYkJWurX6WwoFP0sz10xQg8yL8lgskAZg=="
@@ -372,6 +382,11 @@
     "picocolors" "^1.0.0"
     "source-map-js" "^1.0.2"
 
+"qrcode.vue@^3.3.3":
+  "integrity" "sha512-OsD4tQjIbxg/K6D5ZkWjBdYI9eg9K2i8qeYILdEAX5mdAydSAxV7xKmmZSP/hA12olLqEMZ9ryqDQrwa9jEMgw=="
+  "resolved" "https://registry.npmmirror.com/qrcode.vue/-/qrcode.vue-3.3.3.tgz"
+  "version" "3.3.3"
+
 "resolve@^1.22.1":
   "integrity" "sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw=="
   "resolved" "https://registry.npmjs.org/resolve/-/resolve-1.22.1.tgz"
@@ -387,6 +402,16 @@
   "version" "2.77.2"
   optionalDependencies:
     "fsevents" "~2.3.2"
+
+"sortablejs@^1.15.0":
+  "integrity" "sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w=="
+  "resolved" "https://registry.npmmirror.com/sortablejs/-/sortablejs-1.15.0.tgz"
+  "version" "1.15.0"
+
+"sortablejs@1.14.0":
+  "integrity" "sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w=="
+  "resolved" "https://registry.npmmirror.com/sortablejs/-/sortablejs-1.14.0.tgz"
+  "version" "1.14.0"
 
 "source-map-js@^1.0.2":
   "integrity" "sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw=="
@@ -425,7 +450,14 @@
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.6.tgz"
   "version" "0.13.6"
 
-"vue@^2.6.0 || ^3.2.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@3.2.37":
+"vue-router@^4.0.13":
+  "integrity" "sha512-LmXrC+BkDRLak+d5xTMgUYraT3Nj0H/vCbP+7usGvIl9Viqd1UP6AsP0i69pSbn9O0dXK/xCdp4yPw21HqV9Jw=="
+  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.0.13.tgz"
+  "version" "4.0.13"
+  dependencies:
+    "@vue/devtools-api" "^6.0.0"
+
+"vue@^2.6.0 || ^3.2.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@3.2.37":
   "integrity" "sha512-bOKEZxrm8Eh+fveCqS1/NkG/n6aMidsI6hahas7pa0w/l7jkbssJVsRhVDs07IdDq7h9KHswZOgItnwJAgtVtQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.37.tgz"
   "version" "3.2.37"
@@ -435,3 +467,10 @@
     "@vue/runtime-dom" "3.2.37"
     "@vue/server-renderer" "3.2.37"
     "@vue/shared" "3.2.37"
+
+"vuedraggable@^4.1.0":
+  "integrity" "sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww=="
+  "resolved" "https://registry.npmmirror.com/vuedraggable/-/vuedraggable-4.1.0.tgz"
+  "version" "4.1.0"
+  dependencies:
+    "sortablejs" "1.14.0"

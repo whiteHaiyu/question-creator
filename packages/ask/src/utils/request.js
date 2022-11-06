@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.timeout = 50000
+axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(config => {
   return config
@@ -8,25 +9,17 @@ axios.interceptors.request.use(config => {
   return Promise.error(error)
 })
 
-const getPaper = (params) => {
-    return axios.get(`xx/xx/${params}`)
-}
-
-const createPaper = (params) => {
-    return axios.get(`xx/xx/${params}`)
-};
-
 // 创建问卷
-const createSurvey = (data) => {
+export const createSurvey = (data) => {
   return axios({
     method: 'post',
-    url: '/api/survey/create',
+    url: '/api/creator/create_survey',
     data
   })
 }
 
 // 问卷添加题目
-const createQuestions = (data) => {
+export const createQuestions = (data) => {
   return axios({
     method: 'post',
     url: '/api/question/create_s',
@@ -35,7 +28,7 @@ const createQuestions = (data) => {
 }
 
 // 问卷添加算分规则
-const createScore = (data) => {
+export const createScore = (data) => {
   return axios({
     method: 'post',
     url: '/api/inform/createScoreRule',
@@ -43,10 +36,47 @@ const createScore = (data) => {
   })
 }
 
-export {
-    getPaper,
-    createPaper,
-    createSurvey,
-    createQuestions,
-    createScore
+// 用户注册
+export const register = (data) => {
+  return axios({
+    method: 'post',
+    url: '/api/creator/register',
+    params: data
+  })
+}
+
+// 用户登录
+export const login = (data) => {
+  return axios({
+    method: 'post',
+    url: '/api/creator/login',
+    data
+  })
+}
+
+// 问卷列表
+export const surveyList = (params) => {
+  return axios({
+    method: 'get',
+    url: '/api/creator/personal/home',
+    params
+  })
+}
+
+// 删除问卷
+export const deleteSurvey = (data) => {
+  return axios({
+    method: 'post',
+    url: '/api/creator/delete_survey',
+    data
+  })
+}
+
+// 编辑试题
+export const modifyQuestion = (data) => {
+  return axios({
+    method: 'post',
+    url: '/api/creator/update_question',
+    data
+  })
 }

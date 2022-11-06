@@ -17,7 +17,7 @@ const showSheet = ref(false);
 
 const showRequired = ref(false);
 
-const questionList = reactive([
+const questionList = ref([
   {
     name: '一般信息',
     id: 16
@@ -40,8 +40,23 @@ const questionList = reactive([
   }
 ]);
 
-onMounted(() => {
-  const sId = getQueryVariable('surveyId') || questionList[0].id;
+onMounted(async () => {
+  let sIds = getQueryVariable('surveyIds');
+  if (sIds) {
+    sIds = JSON.parse(decodeURIComponent(sIds));
+    await Promise.all(sIds.map(surveyId => {
+      return getTitle(surveyId)
+    })).then(res => {
+      console.log(res)
+      questionList.value = sIds.map((surveyId, idx) => {
+        return {
+          name: res[idx].data,
+          id: +surveyId
+        }
+      })
+    })
+  }
+  const sId = getQueryVariable('surveyId') || questionList.value[0].id;
   getData(sId);
 });
 
@@ -50,7 +65,7 @@ const getData = async (id) => {
   surveyId.value = id;
   try {
       const [paperData, titleData] = await Promise.all([getPaper(surveyId.value), getTitle(surveyId.value)]);
-      const target = questionList.find(item => item.id === +surveyId.value);
+      const target = questionList.value.find(item => item.id === +surveyId.value);
       questions.value = paperData.data.map(item => {
         item.uid = guid();
         return item;
@@ -128,12 +143,12 @@ const onSubmit = () => {
 }
 
 const handleNext = () => {
-  const idx = questionList.findIndex(item => item.id === +surveyId.value) + 1;
-  if (questionList[idx] && questionList[idx].id) {
+  const idx = questionList.value.findIndex(item => item.id === +surveyId.value) + 1;
+  if (questionList.value[idx] && questionList.value[idx].id) {
       showResult.value = false;
       showSheet.value = false;
       showRequired.value = false;
-      getData(questionList[idx].id);
+      getData(questionList.value[idx].id);
       try {
         scrollTo(0,0);
       } catch (e) {

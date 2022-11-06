@@ -7,12 +7,13 @@ const defaultOption = {
     score: 0 //该选项的分数
 };
 
-const {question, index} = defineProps({
+const {question, index, isModify} = defineProps({
     index: Number,
-    question: Object
+    question: Object,
+    isModify: Boolean
 });
 
-const emit = defineEmits(['handleCopy', 'handleDelete']);
+const emit = defineEmits(['handleCopy', 'handleDelete', 'handleModify']);
 
 const handleAddOption = () => {
     const optionsIdx = question.options.length + 1;
@@ -28,10 +29,14 @@ const handleAddOption = () => {
 <div class="question-card">
     <div class="header-container">
         <span class="question-index">第{{index}}题</span>
-        <div>
+        <div v-if="isModify">
+            <el-button v-if="question.type === 0" type="primary" @click="handleAddOption">添加选项</el-button>
+            <el-button type="warning" @click="emit('handleModify', question.uid)">修改题目</el-button>
+        </div>
+        <div v-else>
             <el-button v-if="question.type === 0" type="primary" @click="handleAddOption">添加选项</el-button>
             <el-button type="primary" @click="emit('handleCopy', question.uid)">复制题目</el-button>
-            <el-button type="primary" @click="emit('handleDelete', question.uid)">删除题目</el-button>
+            <el-button type="danger" @click="emit('handleDelete', question.uid)">删除题目</el-button>
         </div>
     </div>
     <div class="question-container">
